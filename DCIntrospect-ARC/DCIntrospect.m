@@ -5,6 +5,7 @@
 //
 
 #import "DCIntrospect.h"
+#import "DCControlCenterCollectionViewController.h"
 #import "UIView+DCAdditions.h"
 #import <dlfcn.h>
 #import "DCTextView.h"
@@ -243,7 +244,7 @@ static bool AmIBeingDebugged(void)
 			[self.inputTextView resignFirstResponder];
 		
 		[self resetInputTextView];
-		
+
 		[[NSNotificationCenter defaultCenter] postNotificationName:kDCIntrospectNotificationIntrospectionDidStart
 															object:nil];
 	}
@@ -265,6 +266,17 @@ static bool AmIBeingDebugged(void)
 		[[NSNotificationCenter defaultCenter] postNotificationName:kDCIntrospectNotificationIntrospectionDidEnd
 															object:nil];
 	}
+}
+
+- (void)bringUpControlCenter
+{
+    if (self.on) {
+        if (!self.controlCenterCollectionVC) {
+            self.controlCenterCollectionVC = [[DCControlCenterCollectionViewController alloc] init];
+        }
+
+        [self.frameView.window addSubview:self.controlCenterCollectionVC.view];
+    }
 }
 
 - (void)touchAtPoint:(CGPoint)point

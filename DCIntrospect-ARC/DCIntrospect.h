@@ -15,6 +15,8 @@
 #import "DCFrameView.h"
 #import "DCStatusBarOverlay.h"
 
+@class DCControlCenterCollectionViewController;
+
 #ifdef DEBUG
 
 @interface UIView (debug)
@@ -42,6 +44,7 @@
 @property (nonatomic, retain) DCFrameView *frameView;
 @property (nonatomic, retain) UITextView *inputTextView;
 @property (nonatomic, retain) DCStatusBarOverlay *statusBarOverlay;
+@property (nonatomic) DCControlCenterCollectionViewController *controlCenterCollectionVC;
 
 @property (nonatomic, retain) NSMutableDictionary *objectNames;
 
@@ -71,6 +74,7 @@
 //////////////////
 
 - (void)invokeIntrospector;					// can be called manually
+- (void)bringUpControlCenter;
 - (void)touchAtPoint:(CGPoint)point;		// can be called manually
 - (void)selectView:(UIView *)view;
 - (void)statusBarTapped;

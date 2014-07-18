@@ -28,6 +28,7 @@
 		80A2D62A182B906F00A72E48 /* DCStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A2D622182B906F00A72E48 /* DCStatusBarOverlay.m */; };
 		80A2D62B182B906F00A72E48 /* DCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A2D624182B906F00A72E48 /* DCTextView.m */; };
 		80A2D62C182B906F00A72E48 /* UIView+DCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A2D626182B906F00A72E48 /* UIView+DCAdditions.m */; };
+		B78F7EDA1979B84600E2F97E /* DCControlCenterCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78F7ED91979B84600E2F97E /* DCControlCenterCollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		80A2D624182B906F00A72E48 /* DCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCTextView.m; sourceTree = "<group>"; };
 		80A2D625182B906F00A72E48 /* UIView+DCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+DCAdditions.h"; sourceTree = "<group>"; };
 		80A2D626182B906F00A72E48 /* UIView+DCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+DCAdditions.m"; sourceTree = "<group>"; };
+		B78F7ED81979B84600E2F97E /* DCControlCenterCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCControlCenterCollectionViewController.h; sourceTree = "<group>"; };
+		B78F7ED91979B84600E2F97E /* DCControlCenterCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCControlCenterCollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 		80A2D619182B906F00A72E48 /* DCIntrospect-ARC */ = {
 			isa = PBXGroup;
 			children = (
+				B78F7ED81979B84600E2F97E /* DCControlCenterCollectionViewController.h */,
+				B78F7ED91979B84600E2F97E /* DCControlCenterCollectionViewController.m */,
 				80A2D61A182B906F00A72E48 /* DCCrossHairView.h */,
 				80A2D61B182B906F00A72E48 /* DCCrossHairView.m */,
 				80A2D61C182B906F00A72E48 /* DCFrameView.h */,
@@ -299,6 +304,7 @@
 				80A2D5ED182B905700A72E48 /* main.m in Sources */,
 				80A2D5FA182B905700A72E48 /* DCViewController.m in Sources */,
 				80A2D628182B906F00A72E48 /* DCFrameView.m in Sources */,
+				B78F7EDA1979B84600E2F97E /* DCControlCenterCollectionViewController.m in Sources */,
 				80A2D62C182B906F00A72E48 /* UIView+DCAdditions.m in Sources */,
 				80A2D62A182B906F00A72E48 /* DCStatusBarOverlay.m in Sources */,
 				80A2D5F1182B905700A72E48 /* DCAppDelegate.m in Sources */,
