@@ -16,6 +16,11 @@
 {
     // Override point for customization after application launch.
     [[DCIntrospect sharedIntrospector] start];
+
+    UISwipeGestureRecognizer *DCActivator = [[UISwipeGestureRecognizer alloc] initWithTarget:[DCIntrospect sharedIntrospector] action:@selector(invokeIntrospector)];
+    DCActivator.numberOfTouchesRequired = 2;
+    DCActivator.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.window addGestureRecognizer:DCActivator];
     return YES;
 }
 							
@@ -45,5 +50,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

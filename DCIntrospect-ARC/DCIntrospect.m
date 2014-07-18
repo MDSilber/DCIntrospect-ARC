@@ -101,14 +101,14 @@ static bool AmIBeingDebugged(void)
 + (DCIntrospect *)sharedIntrospector
 {
 	static DCIntrospect *sharedInstance = nil;
-#if TARGET_IPHONE_SIMULATOR
+//#if TARGET_IPHONE_SIMULATOR
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		sharedInstance = [[DCIntrospect alloc] init];
 		sharedInstance.keyboardBindingsOn = YES;
 		sharedInstance.showStatusBarOverlay = ![UIApplication sharedApplication].statusBarHidden;
 	});
-#endif
+//#endif
 	return sharedInstance;
 }
 
