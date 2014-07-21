@@ -313,6 +313,9 @@ static bool AmIBeingDebugged(void)
 
 - (void)selectView:(UIView *)view
 {
+    if ([view isKindOfClass:[DCControlCenterCollectionView class]] || [view isKindOfClass:[DCControlCenterCollectionViewCell class]] || [view isKindOfClass:[DCControlCenterCollectionViewCellLabel class]] || [view.superview isKindOfClass:[DCControlCenterCollectionViewCell class]]) {
+        return;
+    }
 	self.currentView = view;
 	self.originalFrame = self.currentView.frame;
 	self.originalAlpha = self.currentView.alpha;
@@ -392,7 +395,12 @@ static bool AmIBeingDebugged(void)
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
 {
-	if ([string isEqualToString:kDCIntrospectKeysDisableForPeriod])
+    return [self handleKeyPressForString:string];
+}
+
+- (BOOL)handleKeyPressForString:(NSString *)string
+{
+    if ([string isEqualToString:kDCIntrospectKeysDisableForPeriod])
     {
         [self disableForPeriod];
         return NO;
@@ -405,7 +413,9 @@ static bool AmIBeingDebugged(void)
 	}
 	
 	if (!self.on)
+    {
 		return NO;
+    }
 	
 	if (self.showingHelp)
 	{
@@ -653,6 +663,7 @@ static bool AmIBeingDebugged(void)
 	}
 	
 	[mainWindow bringSubviewToFront:self.frameView];
+    [mainWindow insertSubview:self.controlCenterCollectionVC.view aboveSubview:self.frameView];
 	
 	if (self.on)
 	{

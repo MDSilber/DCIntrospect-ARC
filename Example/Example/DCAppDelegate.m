@@ -17,7 +17,6 @@
     // Override point for customization after application launch.
     [[DCIntrospect sharedIntrospector] start];
 
-#ifndef TARGET_IPHONE_SIMULATOR
     UISwipeGestureRecognizer *DCActivator = [[UISwipeGestureRecognizer alloc] initWithTarget:[DCIntrospect sharedIntrospector] action:@selector(invokeIntrospector)];
     DCActivator.numberOfTouchesRequired = 2;
     DCActivator.direction = UISwipeGestureRecognizerDirectionDown;
@@ -27,7 +26,6 @@
     DCControlCenterActivator.numberOfTouchesRequired = 2;
     DCControlCenterActivator.direction = UISwipeGestureRecognizerDirectionUp;
     [self.window addGestureRecognizer:DCControlCenterActivator];
-#endif
 
     return YES;
 }

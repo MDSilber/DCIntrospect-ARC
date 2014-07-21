@@ -85,6 +85,7 @@
 
 - (void)textViewDidChangeSelection:(UITextView *)textView;
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string;
+- (BOOL)handleKeyPressForString:(NSString *)string;
 
 /////////////////////////////////
 // Logging Code & Object Names //
