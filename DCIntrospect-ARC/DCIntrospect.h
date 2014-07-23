@@ -60,6 +60,7 @@
 ///////////
 
 + (DCIntrospect *)sharedIntrospector;		// this returns nil when NOT in DEGBUG mode
++ (NSDictionary *)commandsAndDescriptions;  // Returns a dictionary of commands and their descriptions
 - (void)start;								// NOTE: call setup AFTER [window makeKeyAndVisible] so statusBarOrientation is reported correctly.
 
 ////////////////////

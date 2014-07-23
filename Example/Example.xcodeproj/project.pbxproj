@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28372BF9197F6EC200219278 /* DCHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28372BF8197F6EC200219278 /* DCHintView.m */; };
 		80804455182BB2EB0004B766 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80804454182BB2EB0004B766 /* QuartzCore.framework */; };
 		809BBFAE182BA63B005CEF42 /* ExampleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 809BBFAD182BA63B005CEF42 /* ExampleTest.m */; };
 		80A2D5E1182B905700A72E48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A2D5E0182B905700A72E48 /* Foundation.framework */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		28372BF7197F6EC200219278 /* DCHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCHintView.h; sourceTree = "<group>"; };
+		28372BF8197F6EC200219278 /* DCHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCHintView.m; sourceTree = "<group>"; };
 		80804454182BB2EB0004B766 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		809BBFAD182BA63B005CEF42 /* ExampleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleTest.m; sourceTree = "<group>"; };
 		80A2D5DD182B905700A72E48 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +185,8 @@
 		80A2D619182B906F00A72E48 /* DCIntrospect-ARC */ = {
 			isa = PBXGroup;
 			children = (
+				28372BF7197F6EC200219278 /* DCHintView.h */,
+				28372BF8197F6EC200219278 /* DCHintView.m */,
 				B78F7ED81979B84600E2F97E /* DCControlCenterCollectionViewController.h */,
 				B78F7ED91979B84600E2F97E /* DCControlCenterCollectionViewController.m */,
 				80A2D61A182B906F00A72E48 /* DCCrossHairView.h */,
@@ -300,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28372BF9197F6EC200219278 /* DCHintView.m in Sources */,
 				80A2D627182B906F00A72E48 /* DCCrossHairView.m in Sources */,
 				80A2D5ED182B905700A72E48 /* main.m in Sources */,
 				80A2D5FA182B905700A72E48 /* DCViewController.m in Sources */,

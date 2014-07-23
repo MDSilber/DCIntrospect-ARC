@@ -22,10 +22,10 @@ NSString* _recursiveDescription(id view, NSUInteger depth);
 
 #define IS_IOS7_AND_UP ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0)
 
-// break into GDB code complied from following sources: 
+// break into GDB code complied from following sources:
 // http://blog.timac.org/?p=190, http://developer.apple.com/library/mac/#qa/qa1361/_index.html, http://cocoawithlove.com/2008/03/break-into-debugger.html
 
-// Returns true if the current process is being debugged (either 
+// Returns true if the current process is being debugged (either
 // running under the debugger or has a debugger attached post facto).
 static bool AmIBeingDebugged(void)
 {
@@ -33,28 +33,28 @@ static bool AmIBeingDebugged(void)
 	int                 mib[4];
 	struct kinfo_proc   info;
 	size_t              size;
-
-	// Initialize the flags so that, if sysctl fails for some bizarre 
+    
+	// Initialize the flags so that, if sysctl fails for some bizarre
 	// reason, we get a predictable result.
-
+    
 	info.kp_proc.p_flag = 0;
-
+    
 	// Initialize mib, which tells sysctl the info we want, in this case
 	// we're looking for information about a specific process ID.
-
+    
 	mib[0] = CTL_KERN;
 	mib[1] = KERN_PROC;
 	mib[2] = KERN_PROC_PID;
 	mib[3] = getpid();
-
+    
 	// Call sysctl.
-
+    
 	size = sizeof(info);
 	junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
 	assert(junk == 0);
-
+    
 	// We're being debugged if the P_TRACED flag is set.
-
+    
 	return ( (info.kp_proc.p_flag & P_TRACED) != 0 );
 }
 
@@ -80,7 +80,7 @@ static bool AmIBeingDebugged(void)
 #pragma mark Setup
 
 + (void)initialize
-{	
+{
 	NSString *simulatorRoot = [[[NSProcessInfo processInfo] environment] objectForKey:@"IPHONE_SIMULATOR_ROOT"];
 	if (simulatorRoot)
 	{
@@ -102,15 +102,52 @@ static bool AmIBeingDebugged(void)
 + (DCIntrospect *)sharedIntrospector
 {
 	static DCIntrospect *sharedInstance = nil;
-//#if TARGET_IPHONE_SIMULATOR
+    //#if TARGET_IPHONE_SIMULATOR
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		sharedInstance = [[DCIntrospect alloc] init];
 		sharedInstance.keyboardBindingsOn = YES;
 		sharedInstance.showStatusBarOverlay = ![UIApplication sharedApplication].statusBarHidden;
 	});
-//#endif
+    //#endif
 	return sharedInstance;
+}
+
++ (NSDictionary *)commandsAndDescriptions
+{
+    return @{kDCIntrospectKeysInvoke: @"Invoke Introspector",
+             kDCIntrospectKeysToggleViewOutlines: @"Toggle View Outlines",
+             kDCIntrospectKeysToggleNonOpaqueViews: @"Toggle Highlighting Non-Opaque Views",
+             kDCIntrospectKeysToggleAmbiguousLayouts: @"Toggle Highlighting Ambiguous Layouts",
+             kDCIntrospectKeysToggleHelp: @"Toggle Help",
+             kDCIntrospectKeysToggleFlashViewRedraws: @"Toggle flash on drawRect:",
+             kDCIntrospectKeysToggleShowCoordinates: @"Toggle Coordinates",
+             kDCIntrospectKeysDisableForPeriod: [NSString stringWithFormat:@"Disable for %g seconds", kDCIntrospectTemporaryDisableDuration],
+             kDCIntrospectKeysLogProperties: @"Log Properties",
+             kDCIntrospectKeysLogAccessibilityProperties: @"Log Accessibility Properties",
+             kDCIntrospectKeysLogViewRecursive: @"Log Recursive Description for View",
+             kDCIntrospectKeysExerciseAmbiguityInLayout: @"Exercise autolayout ambiguity, if any",
+             kDCIntrospectKeysConstraintsAffectingLayoutForAxisX: @"Log horizontal constraints affecting View",
+             kDCIntrospectKeysConstraintsAffectingLayoutForAxisY: @"Log vertical constraints affecting View",
+             kDCIntrospectKeysEnterGDB: @"Enter GDB",
+             kDCIntrospectKeysMoveUpInViewHierarchy: @"Move up in view hierarchy",
+             kDCIntrospectKeysMoveBackInViewHierarchy: @"Move back down in view hierarchy",
+             kDCIntrospectKeysNudgeViewLeft: @"Nudge Left",
+             kDCIntrospectKeysNudgeViewRight: @"Nudge Right",
+             kDCIntrospectKeysNudgeViewUp: @"Nudge Up",
+             kDCIntrospectKeysNudgeViewDown: @"Nudge Down",
+             kDCIntrospectKeysCenterInSuperview: @"Center in Superview",
+             kDCIntrospectKeysIncreaseWidth: @"Increase Width",
+             kDCIntrospectKeysDecreaseWidth: @"Decrease Width",
+             kDCIntrospectKeysIncreaseHeight: @"Increase Height",
+             kDCIntrospectKeysDecreaseHeight: @"Decrease Height",
+             kDCIntrospectKeysIncreaseViewAlpha: @"Increase Alpha",
+             kDCIntrospectKeysDecreaseViewAlpha: @"Decrease Alpha",
+             kDCIntrospectKeysLogCodeForCurrentViewChanges: @"Log view code",
+             kDCIntrospectKeysSetNeedsDisplay: @"Call setNeedsDisplay",
+             kDCIntrospectKeysSetNeedsLayout: @"Call setNeedsLayout",
+             kDCIntrospectKeysReloadData: @"Call reloadData (UITableView only)"
+             };
 }
 
 - (void)start
@@ -183,7 +220,7 @@ static bool AmIBeingDebugged(void)
 			[self performSelector:@selector(takeFirstResponder) withObject:nil afterDelay:0.1];
 		}
 	}];
-
+    
 	// listen for device orientation changes to adjust the status bar
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViews) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -244,7 +281,7 @@ static bool AmIBeingDebugged(void)
 			[self.inputTextView resignFirstResponder];
 		
 		[self resetInputTextView];
-
+        
 		[[NSNotificationCenter defaultCenter] postNotificationName:kDCIntrospectNotificationIntrospectionDidStart
 															object:nil];
 	}
@@ -274,7 +311,7 @@ static bool AmIBeingDebugged(void)
         if (!self.controlCenterCollectionVC) {
             self.controlCenterCollectionVC = [[DCControlCenterCollectionViewController alloc] init];
         }
-
+        
         [self.frameView.window addSubview:self.controlCenterCollectionVC.view];
     }
 }
@@ -706,7 +743,7 @@ static bool AmIBeingDebugged(void)
 			self.statusBarOverlay.leftLabel.text = [NSString stringWithFormat:@"%@", nameForObject];
 		
 		self.statusBarOverlay.rightLabel.text = NSStringFromCGRect(self.currentView.frame);
-
+        
 		if ([self.currentView respondsToSelector:@selector(hasAmbiguousLayout)])
 			if ([self.currentView hasAmbiguousLayout])
 				self.statusBarOverlay.rightLabel.text = [NSString stringWithFormat:@"\ue021%@", self.statusBarOverlay.rightLabel.text];
@@ -930,7 +967,7 @@ static bool AmIBeingDebugged(void)
 			
 			BOOL hasAmbiguousLayout = [subview hasAmbiguousLayout];
 			UIColor *toggledBackgroundColor = self.highlightAmbiguousLayouts ? [kDCIntrospectAmbiguousColor colorWithAlphaComponent:.6] : originalColor;
-						
+            
 			if (hasAmbiguousLayout)
 				subview.backgroundColor = toggledBackgroundColor;
 		}
@@ -1578,7 +1615,7 @@ NSString* _recursiveDescription(id view, NSUInteger depth)
 		[helpString appendFormat:@"<div><span class='name'>Toggle View Outlines</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleViewOutlines];
 		[helpString appendFormat:@"<div><span class='name'>Toggle Highlighting Non-Opaque Views</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleNonOpaqueViews];
 		[helpString appendFormat:@"<div><span class='name'>Toggle Highlighting Ambiguous Layouts</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleAmbiguousLayouts];
-
+        
 		[helpString appendFormat:@"<div><span class='name'>Toggle Help</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleHelp];
 		[helpString appendFormat:@"<div><span class='name'>Toggle flash on <span class='code'>drawRect:</span> (see below)</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleFlashViewRedraws];
 		[helpString appendFormat:@"<div><span class='name'>Toggle coordinates</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleShowCoordinates];
@@ -1835,7 +1872,7 @@ NSString* _recursiveDescription(id view, NSUInteger depth)
     int numClasses = objc_getClassList(NULL, 0);
     Class *classes = NULL;
 	
-//    classes = malloc(sizeof(Class) * numClasses);
+    //    classes = malloc(sizeof(Class) * numClasses);
     numClasses = objc_getClassList(classes, numClasses);
 	
     NSMutableArray *result = [NSMutableArray array];
@@ -1860,7 +1897,7 @@ NSString* _recursiveDescription(id view, NSUInteger depth)
         
         free(classes);
     }
-    	
+    
     classes = NULL;
 	
     return result;
@@ -1883,17 +1920,17 @@ NSString* _recursiveDescription(id view, NSUInteger depth)
 	
 	if ([view pointInside:touchPoint withEvent:nil])
 	{
-	   [views addObject:view];
-	   
-	   for (UIView *subview in view.subviews)
-	   {
-	       if ([self shouldIgnoreView:subview])
-	           continue;
-	       
-	       CGPoint convertedTouchPoint = [view convertPoint:touchPoint toView:subview];
-	       
-	       [views addObjectsFromArray:[self viewsAtPoint:convertedTouchPoint inView:subview]];
-	   }
+        [views addObject:view];
+        
+        for (UIView *subview in view.subviews)
+        {
+            if ([self shouldIgnoreView:subview])
+                continue;
+            
+            CGPoint convertedTouchPoint = [view convertPoint:touchPoint toView:subview];
+            
+            [views addObjectsFromArray:[self viewsAtPoint:convertedTouchPoint inView:subview]];
+        }
 	}
 	
 	return views;
